@@ -1,0 +1,119 @@
+# ==========================
+# IDE / Editor Config Files
+# ==========================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Vim
+*.swp
+*.swo
+*.swx
+*.un~
+*.tmp
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# JetBrains IDEs (IntelliJ, PyCharm, etc.)
+.idea/
+*.iml
+out/
+
+# ==========================
+# Backup / Extra Files
+# ==========================
+*.bak
+*.backup
+*.old
+*.orig
+
+# ==========================
+# Archives
+# ==========================
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz2
+*.rar
+*.7z
+
+# ==========================
+# System Files (Optional)
+# ==========================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# .gitignore for Terraform projects
+
+#----------------------------------------
+# 1) Terraform working directories
+#----------------------------------------
+# Local plugin downloads and modules
+.terraform/
+
+#----------------------------------------
+# 2) Terraform state
+#----------------------------------------
+# The local state file
+terraform.tfstate
+# Backup of the local state file
+terraform.tfstate.backup
+# Any other state files you might create
+*.tfstate
+*.tfstate.backup
+
+#----------------------------------------
+# 3) Sensitive variable definitions
+#----------------------------------------
+# tfvars often contain secrets (API keys, passwords, etc.)
+*.tfvars
+*.tfvars.json
+
+#----------------------------------------
+# 4) CLI config & logs
+#----------------------------------------
+# Crash logs (contains stack traces, may contain sensitive info)
+crash.log
+# Terraform CLI config (if you customize providers, credentials, etc.)
+.terraformrc
+terraform.rc
+
+#----------------------------------------
+# 5) Override files
+#----------------------------------------
+# Local override files; not for version control
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+#----------------------------------------
+# 6) Plan output
+#----------------------------------------
+# Binary or JSON plan outputs
+*.tfplan
+*.tfplan.json
+
+#----------------------------------------
+# 7) (Optional) IDE / editor settings
+#----------------------------------------
+# VS Code
+.vscode/
+# JetBrains IDEs
+.idea/
+# Mac system files
+.DS_Store
