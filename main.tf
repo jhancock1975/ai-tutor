@@ -105,8 +105,8 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
 resource "aws_lambda_function" "api" {
   function_name    = "api"
   role             = aws_iam_role.lambda_exec.arn
-  handler          = "main"
-  runtime          = "go1.x"
+  handler          = "bootstrap"
+  runtime          = "provided.al2"
 
   # point at the ZIP you built in GitHub Actions
   filename         = "${path.module}/lambda.zip"
