@@ -10,6 +10,8 @@
   <p id="msg"></p>
 
   <script>
+    // Injected by Terraform:
+    window.API_URL = "${api_url}";
     document.getElementById('sayHello').addEventListener('click', () => {
       fetch("{{API_URL}}")
         .then(res => res.text())

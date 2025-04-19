@@ -157,13 +157,20 @@ resource "aws_api_gateway_deployment" "deploy" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   stage_name  = "prod"
 }
-
+locals {
+  rendered_index = templatefile(
+    "${path.module}/index.html.tpl",
+    {
+      api_url = aws_api_gateway_deployment.deploy.invoke_url
+    }
+  )
+}
 #------------------------------------------------------------
 # 4) Upload index.html with API URL interpolated
 #------------------------------------------------------------
 resource "aws_s3_bucket_object" "index" {
   bucket = aws_s3_bucket.website.id
   key    = "index.html"
-  source = "${path.module}/index.html"
+  content      = local.rendered_index
   content_type = "text/html"
 }
