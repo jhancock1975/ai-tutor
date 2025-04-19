@@ -173,4 +173,6 @@ resource "aws_s3_bucket_object" "index" {
   key    = "index.html"
   content      = local.rendered_index
   content_type = "text/html"
+  acl          = "public-read"
+
 }
