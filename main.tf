@@ -165,6 +165,20 @@ locals {
     }
   )
 }
+resource "aws_s3_bucket_policy" "spa_app_public" {
+  bucket = aws_s3_bucket.spa-app.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Sid       = "AllowPublicRead"
+      Effect    = "Allow"
+      Principal = "*"
+      Action    = ["s3:GetObject"]
+      Resource  = ["${aws_s3_bucket.spa-app.arn}/*"]
+    }]
+  })
+}
 #------------------------------------------------------------
 # 4) Upload index.html with API URL interpolated
 #------------------------------------------------------------
@@ -173,6 +187,4 @@ resource "aws_s3_bucket_object" "index" {
   key    = "index.html"
   content      = local.rendered_index
   content_type = "text/html"
-  acl          = "public-read"
-
 }
