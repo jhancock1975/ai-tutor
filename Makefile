@@ -14,6 +14,7 @@ build:
 package: setup build
 	zip -j lambda.zip bootstrap
 
+
 # 4) Cleanup all artifacts
 clean:
 	rm -f lambda.zip bootstrap

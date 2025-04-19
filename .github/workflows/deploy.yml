@@ -52,6 +52,10 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Terraform Import IAM Role
+        run: terraform import aws_iam_role.lambda_exec spa-lambda-exec-role
+
+
       # 7) Terraform plan (checks what will change)
       - name: Terraform Plan
         run: terraform plan -out=tfplan
