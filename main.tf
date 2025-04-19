@@ -166,7 +166,7 @@ locals {
   )
 }
 resource "aws_s3_bucket_policy" "spa_app_public" {
-  bucket = aws_s3_bucket.spa-app.id
+  bucket = aws_s3_bucket.website.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -175,10 +175,11 @@ resource "aws_s3_bucket_policy" "spa_app_public" {
       Effect    = "Allow"
       Principal = "*"
       Action    = ["s3:GetObject"]
-      Resource  = ["${aws_s3_bucket.spa-app.arn}/*"]
+      Resource  = ["${aws_s3_bucket.website.arn}/*"]
     }]
   })
 }
+
 #------------------------------------------------------------
 # 4) Upload index.html with API URL interpolated
 #------------------------------------------------------------
