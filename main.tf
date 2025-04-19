@@ -103,14 +103,16 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
 }
 
 resource "aws_lambda_function" "api" {
-  depends_on       = [null_resource.build_lambda]
-  filename         = "${path.module}/lambda.zip"
-  function_name    = "spa-hello"
-  handler          = "bootstrap"
-  runtime          = "provided.al2"
+  function_name    = "api"
   role             = aws_iam_role.lambda_exec.arn
-  source_code_hash = filebase64sha256("${path.module}/lambda.zip")
+  handler          = "main"
+  runtime          = "go1.x"
+
+  # point at the ZIP you built in GitHub Actions
+  filename         = "${path.module}/lambda/lambda.zip"
+  source_code_hash = filebase64sha256("${path.module}/lambda/lambda.zip")
 }
+
 
 #------------------------------------------------------------
 # 3) API Gateway to expose /hello
