@@ -109,7 +109,7 @@ resource "aws_lambda_function" "api" {
   runtime          = "go1.x"
 
   # point at the ZIP you built in GitHub Actions
-  filename         = "${path.module}/lambda/lambda.zip"
+  filename         = "${path.module}/lambda.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda/lambda.zip")
 }
 
