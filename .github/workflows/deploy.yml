@@ -1,0 +1,61 @@
+name: 🚀 Deploy SPA & Lambda
+
+# trigger on pushes to main (or change as needed)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      # AWS creds pulled from repo secrets
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION:        ${{ secrets.AWS_REGION }}
+
+    steps:
+      # 1) Get your code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2) Cache Go modules
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('lambda/go.sum') }}
+
+      # 3) Cache Terraform plugins & state directory
+      - name: Cache Terraform
+        uses: actions/cache@v3
+        with:
+          path: |
+            .terraform
+            **/.terraform.lock.hcl
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf*') }}
+
+      # 4) Build & package the Lambda
+      - name: Build & package Lambda
+        run: make package
+
+      # 5) Install Terraform CLI
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0
+
+      # 6) Terraform init
+      - name: Terraform Init
+        run: terraform init
+
+      # 7) Terraform plan (checks what will change)
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # 8) Terraform apply
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
